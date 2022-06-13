@@ -5,7 +5,7 @@ import pandas
 
 # create a window
 window = turtle.Screen()
-window.title('U.S. States Game(right click open a new window to guess)')
+window.title('Traveling light in U.S. states')
 
 
 
@@ -18,6 +18,14 @@ turtle.shape(image)
 
 
 
+
+# i am a turtle
+arthur = turtle.Turtle()
+arthur.color('blue')
+arthur.shape('turtle')
+
+# load game, turtle will hide at first
+arthur.hideturtle()
 
 
 # get the mouse position number
@@ -43,8 +51,12 @@ all_states = data.state.to_list()
 
 
 
-
+# store input
 guessed_states = []
+
+
+
+
 def write_states(answer_state):
 # check input to local data
 
@@ -57,19 +69,18 @@ def write_states(answer_state):
         
         # save states to a csv file
         new_data = pandas.DataFrame(missing_states)
-        new_data.to_csv('these_states_need_to_learn.csv')
+        new_data.to_csv('these_states_are_not_welcome_to_you.csv')
         turtle.bye()
         
         
+    
     if answer_state in all_states:
         guessed_states.append(answer_state)
         print(guessed_states)
         
-        # create a new turtle
-        t = turtle.Turtle()
-        # t.hideturtle()
-        t.penup()
-        # t.pendown()
+        
+        # display the traveling turtle 
+        arthur.showturtle()
         
         
         # select state information from all_states where state name = answer_state
@@ -77,31 +88,37 @@ def write_states(answer_state):
         push_data = data[data.state == answer_state]
         
         # write state name to picture
-        t.goto(int(push_data.x), int(push_data.y))
-        t.write(answer_state)
+        arthur.goto(int(push_data.x), int(push_data.y))
+        arthur.write(answer_state)
+        
+
+        
 
         
 
 
 
 
+
 # get the player's input state
-answer_state = window.textinput(title = f"{len(guessed_states)}/50 correct guess", prompt = "aw, what is the state's name?").title()
+answer_state = window.textinput(title = f"{len(guessed_states)}/50 states have traveled", prompt = "aw, what is the state traveling light?").title()
 print(answer_state)
+
+# hide first position
+arthur.penup()
 write_states(answer_state)
 
-
+# recorde every place
+arthur.pendown()
 
 
 
 # right mouse button, open a new window again
 def get_prompt(title, prompt):
-    answer_state = window.textinput(title = f'{len(guessed_states)}/50 correct guess', prompt = "hello again, what is the state's name?").title()
+    answer_state = window.textinput(title = f'{len(guessed_states)}/50 states have traveled', prompt = "hello again, what is the next state traveling light?").title()
     print(answer_state)
     write_states(answer_state)
     
-
-
 
 
 
@@ -111,13 +128,6 @@ turtle.onscreenclick(get_prompt, 3)
 
 
 
-
-
-
-
 # keep window open
-turtle.mainloop()
-
-
-
+turtle.done()
 
